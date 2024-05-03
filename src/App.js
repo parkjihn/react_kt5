@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import './App.css'; // Подключение стилей
+import './App.css'; 
 
 const App = () => {
     const products = useSelector(state => state.products);
@@ -9,7 +9,7 @@ const App = () => {
     const addProduct = () => {
         const name = prompt('Enter product name:');
         if (name) {
-            const id = Date.now(); // Уникальный ID
+            const id = Date.now(); 
             dispatch({ type: 'ADD_PRODUCT', id, name });
         }
     };
