@@ -1,25 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import './App.css'; // Подключение стилей
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const App = () => {
+    const products = useSelector(state => state.products);
+    const dispatch = useDispatch();
+
+    const addProduct = () => {
+        const name = prompt('Enter product name:');
+        if (name) {
+            const id = Date.now(); // Уникальный ID
+            dispatch({ type: 'ADD_PRODUCT', id, name });
+        }
+    };
+
+    return (
+        <div className="container">
+            <div className="header">Shopping Cart</div>
+            <button onClick={addProduct}>Add Product</button>
+            {products.map(product => (
+                <div key={product.id} className="product">
+                    <span className="product-name">{product.name}: {product.count}</span>
+                    <div className="controls">
+                        <button onClick={() => dispatch({ type: 'INCREMENT', id: product.id })}>+</button>
+                        <button onClick={() => dispatch({ type: 'DECREMENT', id: product.id })}>-</button>
+                    </div>
+                </div>
+            ))}
+        </div>
+    );
+};
 
 export default App;
